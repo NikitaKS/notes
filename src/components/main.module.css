@@ -1,0 +1,27 @@
+.addNoteWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.noteWrapper {
+    background-color: grey;
+    position: relative;
+}
+
+.noteWrapper + .noteWrapper {
+    margin-top: 10px;
+}
+
+
+.noteWrapper .name {
+    font-weight: bold;
+}
+
+.noteWrapper .content {
+}
+
+.noteWrapper .deleteButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
