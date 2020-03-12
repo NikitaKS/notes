@@ -10,4 +10,4 @@ const App: FC = () => {
     );
 };
 
-export default App;
+export default (App);

@@ -1,26 +1,34 @@
 import React, {FC} from 'react';
 import s from './main.module.css';
+import {NavLink} from "react-router-dom";
+
 
 interface IProps {
-    id: number
-    name: string
-    content: string
-    del: (id: number) => void
+    name: string | undefined
+    content: string | undefined
 }
 
-const Note: FC<IProps> = ({id, name, content,del}) => {
-
-    const deleteNote = () => {
-        del(id)
-    };
-
+const Note: FC<IProps> = (props) => {
+    // const [editMode, setEditMode] = useState(false);
+    // const [newName, setName] = useState(name);
+    // const [newContent, setContent] = useState(content);
+    //
+    // const deleteNote = () => {
+    //     del(noteKey)
+    // };
+    //
+    // const saveNote = () => {
+    //     const changedNote = {name: newName, content: newContent, id, noteKey};
+    //     saveChanges(changedNote);
+    //     setEditMode(!editMode)
+    // };
     return (
-        <div className={s.noteWrapper}>
-            <div className={s.name}>{name}</div>
-            <div className={s.content}>{content}</div>
-            <button onClick={deleteNote} className={s.deleteButton}>x</button>
+        <div className={s.note}>
+            <div className={s.noteName}>{props.name}</div>
+            <div className={s.noteContent}>{props.content}</div>
+            <NavLink to='/changeNote'>Change</NavLink>
         </div>
     );
 };
 
-export default Note;
+export default (Note);
