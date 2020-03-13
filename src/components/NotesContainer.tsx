@@ -1,23 +1,24 @@
 import React, {FC, useEffect} from 'react';
 import s from './main.module.css';
-import AddNote from './AddNote';
-import {useDispatch, useSelector} from "react-redux";
-import {addNote, getNotes} from "../bll/ThunkCreators";
-import {AppState} from "../redux/store";
-import {INote, Statuses} from "../helpers/types";
+import {useDispatch} from "react-redux";
+import {addNote, changeNote, getNotes} from "../bll/ThunkCreators";
+import {INote} from "../helpers/types";
 import {withRouter, Route} from 'react-router-dom';
 import NoteTabsContainer from './NoteTabsContainer';
 import NoteContainer from './NoteContainer';
+import NoteForm from "./NoteForm";
 
 
 const NotesContainer: FC = () => {
 
     const dispatch = useDispatch();
 
-    const status = useSelector((state: AppState) => state.root.status);
-
     const setNewNote = (newNote: INote) => {
         dispatch(addNote(newNote))
+    };
+
+    const handelChangeNote = (newNote: INote) => {
+        dispatch(changeNote(newNote))
     };
 
     useEffect(() => {
@@ -26,11 +27,10 @@ const NotesContainer: FC = () => {
 
     return (
         <div className={s.mainWrapper}>
-            {status === Statuses.isLoading && <div>Loading...</div>}
-            <Route path='/addNote' render={() => <AddNote setNewNote={setNewNote}/>}/>
+            <Route path='/addNote' render={() => <NoteForm handelClick={setNewNote}/>}/>
             <Route exact path='/' render={() => <NoteTabsContainer/>}/>
             <Route path='/note/:id' render={() => <NoteContainer/>}/>
-            <Route path='/changeNote' render={() => <AddNote setNewNote={setNewNote}/>}/>
+            <Route path='/changeNote/:id' render={() => <NoteForm handelClick={handelChangeNote}/>}/>
         </div>
     );
 };

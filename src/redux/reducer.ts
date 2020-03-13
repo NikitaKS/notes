@@ -6,14 +6,16 @@ import {
     GET_COMMENTS,
     GET_NOTES,
     SET_STATUS,
-    ADD_COMMENT
+    ADD_COMMENT,
+    GET_NOTE_FOR_CHANGE
 } from "../helpers/constants";
 import {IComment, INote, Statuses} from "../helpers/types";
 
 let initialState = {
     notes: [] as INote[],
     comments: [] as IComment[],
-    status: Statuses.notInit
+    status: Statuses.notInit,
+    noteForChange: {} as INote
 };
 
 type StateType = typeof initialState;
@@ -34,6 +36,9 @@ export const reducer = (state = initialState, action: AppActions): StateType => 
         }
         case ADD_COMMENT: {
             return {...state, comments: [...state.comments, action.newComment]}
+        }
+        case GET_NOTE_FOR_CHANGE: {
+            return {...state, noteForChange: action.note}
         }
         case DELETE_NOTE: {
             return {...state, notes: state.notes.filter((note) => note.noteKey !== action.noteKey)}

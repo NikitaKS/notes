@@ -11,11 +11,11 @@ interface IResponse {
 }
 
 export const apiNotes = {
-    async getNotes() {
-        return await instance.get<INote[]>('notes.json')
+    async getNotes():Promise<INote[]>{
+        return await instance.get('notes.json')
             .then((res) => {
                 if (res.data) {
-                    return Object.keys(res.data).map((key: any) => {
+                    return Object.keys(res.data).map((key: string) => {
                         return {...res.data[key], noteKey: key};
                     });
                 } else {
@@ -24,13 +24,19 @@ export const apiNotes = {
 
             })
     },
-    async getComments() {
-        return await instance.get<IComment[]>(`comments.json`)
+    async getNoteForChange(noteKey: string) {
+        return await instance.get<INote>(`notes/${noteKey}.json`)
+            .then((res) => {
+                return {...res.data, noteKey}
+            })
+    },
+    async getComments(currentNoteKey: string):Promise<IComment[]>{
+        return await instance.get(`comments.json`)
             .then((res) => {
                 if (res.data) {
-                    return Object.keys(res.data).map((key: any) => {
+                    return Object.keys(res.data).map((key: string) => {
                         return {...res.data[key], commentKey: key};
-                    });
+                    }).filter((c: IComment) => c.noteKey === currentNoteKey);
                 } else {
                     return []
                 }

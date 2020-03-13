@@ -1,32 +1,20 @@
-import React, {ChangeEvent, FC, useState} from "react";
+import React, {FC} from "react";
 import s from './main.module.css';
+import ReactCommentForm from "../helpers/ReactHookForms/ReactCommentForm";
 
 interface IProps {
     addNewComment: (author: string, comment: string) => void
 }
 
 const AddComment: FC<IProps> = ({addNewComment}) => {
-    const [author, setAuthor] = useState('');
-    const [comment, setComment] = useState('');
 
-    const handelAuthorName = (e: ChangeEvent<HTMLInputElement>) => {
-        setAuthor(e.currentTarget.value)
-    };
-    const handelComment = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setComment(e.currentTarget.value)
-    };
-
-    const handelAddComment = () => {
-            addNewComment(author, comment);
-            setAuthor('');
-            setComment('');
+    const handelAddComment = (author: string, comment: string) => {
+        addNewComment(author, comment);
     };
 
     return (
         <div className={s.addCommentWrapper}>
-            <input onChange={handelAuthorName} value={author} placeholder='Enter your Name' type="text"/>
-            <textarea onChange={handelComment} value={comment} placeholder='Enter your comment'/>
-            <button onClick={handelAddComment} className={s.addCommentButton}>add</button>
+            <ReactCommentForm handelAddComment={handelAddComment}/>
         </div>
     );
 };

@@ -11,6 +11,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin-top: 30px;
 }
 
 .notesTabsWrapper .addButton {
@@ -34,8 +35,8 @@
     border-radius: 5px;
     overflow: hidden;
     z-index: 1;
-    cursor: pointer;
     width: 100%;
+    cursor: pointer;
 }
 
 .noteTabWrapper:after {
@@ -92,8 +93,6 @@
 .noteWrapper {
     display: flex;
     flex-direction: column;
-    background-color: orange;
-
 }
 
 .noteWrapper .note {
@@ -101,6 +100,18 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 15px;
+    background-color: gainsboro;
+    border-radius: 5px;
+    margin-top: 30px;
+}
+
+.noteWrapper .note a {
+    text-decoration: none;
+    margin-top: 10px;
+    padding: 3px;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: inherit;
 }
 
 .noteWrapper .note .noteName {
@@ -115,7 +126,6 @@
 }
 
 .noteWrapper .commentWrapper {
-    background-color: darkgrey;
     padding: 15px;
 }
 
@@ -161,53 +171,4 @@
     font-size: 14px;
     color: white;
     font-weight: bold;
-}
-
-.noteWrapper .commentWrapper .addCommentWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.noteWrapper .commentWrapper .addCommentWrapper input {
-    font-size: 18px;
-    border: none;
-    outline: 1px solid transparent;
-    background-color: transparent;
-    border-bottom: 3px solid red;
-    transition: all .3s ease;
-    padding-left: 5px;
-}
-
-.noteWrapper .commentWrapper .addCommentWrapper input::placeholder {
-    color: #000;
-}
-
-.noteWrapper .commentWrapper .addCommentWrapper input:focus {
-    border-bottom: 3px solid darkcyan;
-}
-
-.noteWrapper .commentWrapper .addCommentWrapper textarea {
-    resize: none;
-    margin-top: 10px;
-    width: 100%;
-    padding: 10px;
-    height: 50px;
-    font-size: 16px;
-    background-color: transparent;
-    border: 1px solid black;
-    outline: 1px solid transparent;
-}
-
-.noteWrapper .commentWrapper .addCommentWrapper .addCommentButton {
-    margin-top: 10px;
-    padding: 8px 25px;
-    background-color: royalblue;
-    border: none;
-    border-radius: 5px;
-    outline: 1px solid transparent;
-    font-size: 16px;
-    font-weight: bold;
-    color: #ffffff;
-    cursor: pointer;
 }

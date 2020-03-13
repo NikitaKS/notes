@@ -1,9 +1,9 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import s from './main.module.css';
 import {withRouter, RouteComponentProps} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../redux/store";
-import {IComment, INote} from "../helpers/types";
+import {INote} from "../helpers/types";
 import Note from "./Note";
 import {addComment, getComments} from "../bll/ThunkCreators";
 import CommentsContainer from "./CommentsContainer";
@@ -17,8 +17,10 @@ interface IProps extends RouteComponentProps<MatchProps> {
 }
 
 const NoteContainer: FC<IProps> = (props) => {
+
     const dispatch = useDispatch();
     const currentNoteKey = props.match.params.id;
+
     useEffect(() => {
         dispatch(getComments(currentNoteKey))
     }, []);
@@ -39,11 +41,14 @@ const NoteContainer: FC<IProps> = (props) => {
         };
         dispatch(addComment(newComment))
     };
-
+    if (currentNoteKey !== currentNote?.noteKey) {
+        return <span>Loading</span>
+    }
     return (
         <div className={s.noteWrapper}>
-            <Note name={currentNote && currentNote.name} content={currentNote && currentNote.content}/>
-            <CommentsContainer comments={comments} addNewComment={addNewComment}/>
+            <Note id={currentNoteKey} name={currentNote ? currentNote.name : ''}
+                  content={currentNote ? currentNote.content : ''}/>
+            <CommentsContainer noteKey={currentNoteKey} comments={comments} addNewComment={addNewComment}/>
         </div>
     );
 };

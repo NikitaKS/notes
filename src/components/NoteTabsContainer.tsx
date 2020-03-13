@@ -4,7 +4,7 @@ import NoteTab from "./NoteTab";
 import {INote} from '../helpers/types';
 import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../redux/store";
-import {changeNote, deleteNote} from '../bll/ThunkCreators';
+import {deleteNote} from '../bll/ThunkCreators';
 import {NavLink} from "react-router-dom";
 
 
@@ -16,10 +16,6 @@ const NoteTabsContainer: FC = () => {
 
     const del = (noteKey: string) => {
         dispatch(deleteNote(noteKey))
-    };
-
-    const saveChanges = (changedNote: INote) => {
-        dispatch(changeNote(changedNote))
     };
 
     let notesElements = notes.map((note: INote) => {

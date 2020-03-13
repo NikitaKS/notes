@@ -5,7 +5,7 @@ import {
     GET_NOTES,
     SET_STATUS,
     GET_COMMENTS,
-    ADD_COMMENT
+    ADD_COMMENT, GET_NOTE_FOR_CHANGE
 } from "../helpers/constants";
 import {IComment, INote, Statuses} from "../helpers/types";
 
@@ -44,13 +44,19 @@ interface IAddComment {
     newComment: IComment
 }
 
+interface IGetNoteForChange {
+    type: typeof GET_NOTE_FOR_CHANGE,
+    note: INote
+}
+
 export type AppActions = IGetNotes
     | ISetStatus
     | IAddNote
     | IDeleteNote
     | IChangeNote
     | IGetComments
-    | IAddComment;
+    | IAddComment
+    | IGetNoteForChange;
 
 export const setNotes = (notes: INote[]): IGetNotes => ({type: GET_NOTES, notes});
 export const setStatus = (status: Statuses): ISetStatus => ({type: SET_STATUS, status});
@@ -59,3 +65,4 @@ export const deleteNoteAC = (noteKey: string): IDeleteNote => ({type: DELETE_NOT
 export const setChangedNote = (changedNote: INote): IChangeNote => ({type: CHANGE_NOTE, changedNote});
 export const setComments = (comments: IComment[]): IGetComments => ({type: GET_COMMENTS, comments});
 export const setNewComment = (newComment: IComment): IAddComment => ({type: ADD_COMMENT, newComment});
+export const setNoteForChange = (note: INote): IGetNoteForChange => ({type: GET_NOTE_FOR_CHANGE, note});

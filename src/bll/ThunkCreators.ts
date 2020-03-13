@@ -8,7 +8,7 @@ import {
     deleteNoteAC,
     setChangedNote,
     setComments,
-    setNewComment
+    setNewComment, setNoteForChange
 } from "./actionCreators";
 import {apiNotes} from "../dal/api";
 import {IComment, INote, Statuses} from "../helpers/types";
@@ -16,62 +16,75 @@ import {IComment, INote, Statuses} from "../helpers/types";
 
 type ThunkActionType = ThunkAction<Promise<void>, AppState, unknown, AppActions>;
 
-export const getNotes = (): ThunkActionType => async (dispatch, getState) => {
+export const getNotes = (): ThunkActionType => async (dispatch) => {
     try {
         dispatch(setStatus(Statuses.isLoading));
         const result = await apiNotes.getNotes();
         dispatch(setNotes(result));
         dispatch(setStatus(Statuses.success));
     } catch (e) {
-        const error = e.response.data.error;
+        console.log(e.response.data.error);
         dispatch(setStatus(Statuses.error));
     }
 };
-export const addNote = (newNote: INote): ThunkActionType => async (dispatch, getState) => {
+
+export const getNoteForChange = (noteKey: string): ThunkActionType => async (dispatch) => {
+    try {
+        dispatch(setStatus(Statuses.isLoading));
+        const noteForChange = await apiNotes.getNoteForChange(noteKey);
+        dispatch(setNoteForChange(noteForChange));
+        dispatch(setStatus(Statuses.success));
+    } catch (e) {
+        console.log(e.response.data.error);
+        dispatch(setStatus(Statuses.error));
+    }
+};
+
+export const addNote = (newNote: INote): ThunkActionType => async (dispatch) => {
     try {
         const noteKey = await apiNotes.addNewNote(newNote);
         dispatch(setNewNote({...newNote, noteKey: noteKey.name}));
     } catch (e) {
-        const error = e.response.data.error;
+        console.log(e.response.data.error);
         dispatch(setStatus(Statuses.error));
     }
 };
-export const deleteNote = (noteKey: string): ThunkActionType => async (dispatch, getState) => {
+export const deleteNote = (noteKey: string): ThunkActionType => async (dispatch) => {
     try {
-        const result = await apiNotes.deleteNote(noteKey);
+        await apiNotes.deleteNote(noteKey);
         dispatch(deleteNoteAC(noteKey))
     } catch (e) {
-        const error = e.response.data.error;
+        console.log(e.response.data.error);
         dispatch(setStatus(Statuses.error));
     }
 };
-export const changeNote = (changedNote: INote): ThunkActionType => async (dispatch, getState) => {
+export const changeNote = (changedNote: INote): ThunkActionType => async (dispatch) => {
     try {
-        const result = await apiNotes.changeNote(changedNote);
+        await apiNotes.changeNote(changedNote);
         dispatch(setChangedNote(changedNote))
     } catch (e) {
-        const error = e.response.data.error;
+        console.log(e.response.data.error);
         dispatch(setStatus(Statuses.error));
     }
 };
-export const getComments = (currentNoteKey:string): ThunkActionType => async (dispatch, getState) => {
+export const getComments = (currentNoteKey: string): ThunkActionType => async (dispatch) => {
     try {
-        // dispatch(setStatus(Statuses.isLoading));
-        const result = await apiNotes.getComments();
-        const comments = result.filter((c:IComment)=>c.noteKey === currentNoteKey);
+        dispatch(setStatus(Statuses.isLoading));
+        const comments = await apiNotes.getComments(currentNoteKey);
         dispatch(setComments(comments));
         dispatch(setStatus(Statuses.success));
+
     } catch (e) {
-        const error = e.response.data.error;
+        console.log(e.response.data.error);
         dispatch(setStatus(Statuses.error));
     }
 };
-export const addComment = (newComment: IComment): ThunkActionType => async (dispatch, getState) => {
+export const addComment = (newComment: IComment): ThunkActionType => async (dispatch) => {
     try {
         const commentKey = await apiNotes.addNewComment(newComment);
         dispatch(setNewComment({...newComment, commentKey: commentKey.name}));
     } catch (e) {
-        const error = e.response.data.error;
+        console.log(e.response.data.error);
         dispatch(setStatus(Statuses.error));
     }
 };
