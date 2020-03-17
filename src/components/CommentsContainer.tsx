@@ -22,7 +22,6 @@ const CommentsContainer: FC<IProps> = ({addNewComment, comments, noteKey}) => {
     if (status === Statuses.isLoading || (comments[0] && noteKey !== comments[0].noteKey)) {
         return <span>loading...</span>
     }
-
     return (
         <div className={s.commentWrapper}>
             {comments.length === 0 ? <span>No Comments....</span> : commentsEl}

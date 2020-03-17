@@ -52,7 +52,8 @@ export const reducer = (state = initialState, action: AppActions): StateType => 
                     } else {
                         return note
                     }
-                })
+                }),
+                noteForChange: {} as INote
             }
         }
         default: {
